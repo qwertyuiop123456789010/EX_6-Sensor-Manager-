@@ -1,0 +1,36 @@
+package com.example.sensormanager;
+
+import android.app.Activity; 
+import android.hardware.Sensor; 
+import android.hardware.SensorEvent; 
+import android.hardware.SensorEventListener; 
+import android.hardware.SensorManager; 
+import android.os.Bundle; 
+
+public class MainActivity extends Activity implements SensorEventListener {
+    SensorManager sensorManager; 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); 
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float x = event.values[0]; // X-axis acceleration
+        float y = event.values[1]; // Y-axis acceleration
+        float z = event.values[2]; // Z-axis acceleration
+        // Process sensor values here (e.g., log or update UI)
+    }
+    
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+}
+-------------------------------------------------
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+    <TextView android:id="@+id/sensorData" android:text="Accelerometer Data" />
+</LinearLayout>
